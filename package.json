@@ -11,6 +11,6 @@
   "dependencies": {
     "express":"latest",
     "chalk": "latest",
-    "clear": "latest",
+    "clear": "latest"
   }
 }

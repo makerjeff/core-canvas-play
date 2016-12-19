@@ -28,11 +28,6 @@ const port              = process.env.PORT || 3000;
 // TODO: switch to Morgan, or encapsulate into module
 app.use(function(req,res,next){
     console.log(new Date() + ' ' + req.method + ' ' + req.url + ' ');
-
-    if(req.body.password) {
-        console.log(' ----- Attempted password: ' + req.body.password);
-    }
-    
     next();
 });
 
@@ -44,8 +39,7 @@ app.use(function(req,res,next){
 
 // TEMP ROUTES
 app.get('/', function(req, res){
-    res.cookie('lgna', 0, {signed:true});
-    res.render('login', {layout: 'super.handlebars'});
+res.send('<b>You\'re on the right page</b>');
 });
 
 
@@ -78,11 +72,6 @@ http.listen(port, function(err){
         console.log(Error('Error: ' + err));
     } else {
         clear();
-        console.log(chalk.green('Making America great again on port ' + port));
-        console.log(chalk.black.bgYellow(' Sever version: ' + serverVersion + ' '));
-
-        // -- TEST --
-        console.log(sdb.credentials);
-        console.log('Token lifespan: ' + tokenLifespan);
+        console.log(chalk.blue('Canvas Core on port ' + port));
     }
 });

@@ -11,6 +11,7 @@ const app               = express();
 const http              = require('http').Server(app);
 const chalk             = require('chalk');
 const clear             = require('clear');
+const io                = require('socket.io')(http);
 
 // =========================
 // CONFIGURATION ===========

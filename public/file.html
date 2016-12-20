@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Play</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<div id="inputDiv">
+    <input id="fileItem" type="file" multiple> <br>
+    <button id="sendFileButton">Send</button>
+</div>
+
+<div id="resultDiv"></div>
+
+<script>
+    var files = document.getElementById('fileItem');
+    var file;
+
+    files.addEventListener('change', function(e){
+        console.log(e);
+        console.log(files.files);
+
+        //loop through and log names
+        for (var i = 0; i < files.files.length; i++) {
+            console.log(files.files[i].name);
+        }
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

@@ -11,6 +11,7 @@
   "dependencies": {
     "express":"latest",
     "chalk": "latest",
-    "clear": "latest"
+    "clear": "latest",
+    "socket.io":"latest"
   }
 }

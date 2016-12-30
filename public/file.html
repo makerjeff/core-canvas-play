@@ -51,6 +51,19 @@
 <div id="resultDiv"></div>
 
 <script>
+
+    // ============ socket.io =============
+    socket.on('userCount', function(msg){
+        if (msg <= 1) {
+            charCreator.createImgChar(msg);
+            userCountIndicator.innerHTML = msg + ' user online (you)';
+        } else {
+            charCreator.createImgChar(msg);
+            userCountIndicator.innerHTML = msg + ' users online';
+        }
+    });
+
+
     var sendButton = document.getElementById('sendFileButton');
     var files = document.getElementById('fileItem');
     var file;

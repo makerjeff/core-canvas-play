@@ -18,6 +18,24 @@ const io                = require('socket.io')(http);
 // =========================
 
 const port              = process.env.PORT || 3000;
+var connectedClients    = 0;
+
+//------------------------
+//--- enable socket.io ---
+io.on('connection', function(socket){
+    connectedClients++;
+    console.log(chalk.blue(socket.id) + ' connected. Total: ' + connectedClients);
+    io.emit('userCount', connectedClients);
+
+    //SOCKET events here.
+    socket.on('disconnect', function(){
+        connectedClients--;
+        console.log(chalk.red(socket.id) + ' disconnected. Total: ' + connectedClients);
+        io.emit('userCount', connectedClients);
+    });
+});
+
+
 
 
 // ====================
@@ -40,7 +58,7 @@ app.use(function(req,res,next){
 
 // TEMP ROUTES
 app.get('/', function(req, res){
-res.send('<b>You\'re on the right page</b>');
+res.send('<b>You\'re on an active server.  Find the right page.</b>');
 });
 
 

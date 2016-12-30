@@ -15,13 +15,13 @@
             border: thin inset #aaaaaa;
 
             width: 600px;
-            height: 300px;
+            height: 600px;
         }
 
     </style>
 </head>
 <body>
-<canvas id="canvas" width="600" height="300">
+<canvas id="canvas" width="600" height="600">
     If you can read this, Canvas is not supported.
 </canvas>
 
@@ -33,7 +33,7 @@
     var font_height = 15;
     var margin = 35;
     var hand_truncation = canvas.width/25;
-    var hour_hand_trunctation = canvas.width/10;
+    var hour_hand_truncation = canvas.width/10;
     var numeral_spacing = 20;
     var radius = canvas.width/2 - margin;
     var hand_radius = radius + numeral_spacing;
@@ -56,18 +56,58 @@
     }
 
     function drawNumerals() {
-        var numerals = [1,2,3,4,5,6,7,8,9,10.11.12];
+        var numerals = [1,2,3,4,5,6,7,8,9,10,11,12];
         var angle = 0;
         var numeralWidth = 0;
 
         numerals.forEach(function(elem, ind, arr){
             angle = Math.PI/6*(elem-3);
-            numeralWidth = context.measureText(elem);   //find the width of text
+            numeralWidth = context.measureText(elem).width;   //find the width of text
 
             context.fillText(elem,
-                canvas.width/2 + Math.cos(angle)*(hand_radius) - numeralWidth/2 + Math.cos());
+                canvas.width/2 + Math.cos(angle)*(hand_radius) - numeralWidth/2,
+                canvas.height/2 + Math.sin(angle)*(hand_radius) + font_height/3
+            );
         });
     }
+
+    function drawCenter() {
+        context.beginPath();
+        context.arc(canvas.width/2, canvas.height/2, 5, 0, Math.PI*2, true);
+        context.fill();
+    }
+
+    function drawHand(loc, isHour) {
+        var angle = (Math.PI*2) * (loc/60) - Math.PI/2;
+        var handRadius = isHour ? radius - hand_truncation - hour_hand_truncation : radius - hand_truncation;
+
+        context.moveTo(canvas.width/2, canvas.height/2);    //move to center
+        context.lineTo(canvas.width/2 + Math.cos(angle) * handRadius, canvas.height/2 + Math.sin(angle)*handRadius);
+        context.stroke();
+    }
+
+    function drawHands() {
+        var date = new Date;
+        var hour = date.getHours();
+
+        hour = hour > 12 ? hour - 12: hour; //make 24 hours to 12 hours.
+        drawHand(hour*5 + (date.getMinutes()/60)*5, true, 0.5);
+        drawHand(date.getMinutes(), false, 0.5);
+        drawHand(date.getSeconds(), false, 0.2);
+    }
+
+    function drawClock() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawCircle();
+        drawCenter();
+        drawHands();
+        drawNumerals();
+    }
+
+    // Initialization --------------------
+    context.font = font_height + 'px Arial';
+    var loop = setInterval(drawClock, 1000);
 
 
 </script>

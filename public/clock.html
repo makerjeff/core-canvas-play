@@ -112,5 +112,29 @@
 
 </script>
 
+<script>
+
+    // ---- mouse events -----
+    canvas.addEventListener('mousedown', function(e){
+        console.log('mouse button is down on canvas.');
+    });
+
+    canvas.addEventListener('mouseup', function(e){
+        console.log('mouse button has been released.');
+    });
+
+    canvas.addEventListener('mouseover', function(e){
+        console.log('mouse is over canvas.');
+    });
+
+    canvas.addEventListener('mouseout', function(e){
+        console.log('mouse has left canvas.');
+    });
+
+    canvas.addEventListener('mousemove', function(e){
+        console.log('mouse is moving over the canvas.');
+    });
+</script>
+
 </body>
 </html>

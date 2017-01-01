@@ -45,16 +45,21 @@
 <script>
 //TODO: put in code.
 
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-    var rubberbandDiv = document.getElementById('rubberbandDiv');
-    var resetButton = document.getElementById('resetButton');
-    var image = new Image();
-    var mousedown = {};
-    var rubberbandRectangle = {};
-    var dragging = false;
+    var canvas              = document.getElementById('canvas');
+    var context             = canvas.getContext('2d');
+    var rubberbandDiv       = document.getElementById('rubberbandDiv');
+    var resetButton         = document.getElementById('resetButton');
+    var image               = new Image();
+    var mousedown           = {};   //holds position of where the mousedown started.
+    var rubberbandRectangle = {};   //holds draw coordinates for rubberband.
+    var dragging            = false;
 
-    // FUNCTIONS -----------------
+    // ------------------------------
+    // FUNCTIONS --------------------
+
+    //TODO: review line by line what the code is doing.
+
+    // specify the start of the rubberbanding.
     function rubberbandStart(x, y) {
         mousedown.x = x;
         mousedown.y = y;
@@ -68,7 +73,10 @@
         dragging = true;
     }
 
+    // adjust rubberband marquee
     function rubberbandStretch(x, y) {
+
+        //
         rubberbandRectangle.left = x < mousedown.x ? x : mousedown.x;
         rubberbandRectangle.top = y < mousedown.y ? y : mousedown.y;
 

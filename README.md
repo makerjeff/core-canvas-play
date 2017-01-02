@@ -7,6 +7,8 @@
 - [Basic CSS Sprite Usage](https://www.nczonline.net/blog/2010/07/06/data-uris-make-css-sprites-obsolete/)
 - [Node.js / IO.js Stream Primer (Youtube)](https://www.youtube.com/watch?v=yOSNQZm3Trw): Streams, Piping, stdout.
 - [W3Resource: Using Buffers in Node.js](http://www.w3resource.com/node.js/nodejs-buffer.php)
+- [Allen's Adventure in Tech: Node.JS Buffer Tutorial](https://allenkim67.github.io/2016/05/17/nodejs-buffer-tutorial.html)
+- [Save Canvas as JPG to Desktop](http://stackoverflow.com/questions/17397319/save-canvas-as-jpg-to-desktop): Use an anchor element.
 
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.

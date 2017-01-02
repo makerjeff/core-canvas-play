@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Rect</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 500px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="500">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<script>
+//TODO: put in code.
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+    context.lineJoin = 'round';
+    context.lineWidth = 30;
+
+    context.font = '24px Courier';
+    var text = 'Click anywhere to erase. ';
+
+    //centers the text horizontally. JWX
+    context.fillText(text, canvas.width/2 - context.measureText(text).width/2, 24);
+
+    context.strokeStyle = 'goldenrod';
+    context.fillStyle = 'rgba(0,0,255,0.5)';
+
+    context.strokeRect(75, 100, 200, 200);
+    context.fillRect(325, 100, 200, 200);
+
+    canvas.onmousedown = function(e){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+
+</script>
+
+</body>
+</html>

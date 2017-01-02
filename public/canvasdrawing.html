@@ -39,6 +39,8 @@
     var context = canvas.getContext('2d');
     var isDrawing;
 
+    var dataURL;    // send load, then send this over socket.
+
     canvas.onmousedown = function(e) {
         var bbox = canvas.getBoundingClientRect();
         isDrawing = true;
@@ -71,9 +73,24 @@
 
     // take snapshot
     snapshotButton.onclick = function(e){
-        snapshotElement.src = canvas.toDataURL();
+        createSnapshot();
     };
 
+
+    // FUNCTIONS --------------------
+    function createSnapshot() {
+
+        var data = canvas.toDataURL('image/jpg');
+        var a = document.createElement('a');
+        a.href = data;
+        a.download = 'a_wonderful_image.jpg';
+
+        var img = document.createElement('img');
+        img.src = data;
+
+        document.body.appendChild(a);
+        a.appendChild(img);
+    }
 </script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gradients</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 500px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="500">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<script>
+//TODO: put in code.
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        //(xStart, yStart, xEnd, yEnd);
+        gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+
+    gradient.addColorStop(0, 'blue');
+    gradient.addColorStop(0.25, 'white');
+    gradient.addColorStop(0.5, 'purple');
+    gradient.addColorStop(0.75, 'red');
+    gradient.addColorStop(1, 'yellow');
+
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+
+</script>
+
+</body>
+</html>

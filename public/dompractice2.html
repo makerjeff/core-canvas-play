@@ -55,7 +55,7 @@
 
         .object_single_position {
             top: 100px;
-            left: 100px;
+            left: 0px;
         }
 
 
@@ -64,7 +64,7 @@
 </head>
 <body>
 <div class="container">
-    <div id="object" class="object_single_IMG"></div>
+    <!--<div id="object" class="object_single_IMG"></div>-->
     <div id="object2" class="object_single_IMG"></div>
 
 </div>
@@ -77,35 +77,65 @@
     // set IMG css to '100%' and use IMG container to scale.
     // play with pseudo elements.
 
-    // =============================
-    // EVENTS ======================
+    var object = document.getElementById('object2');
 
-    var objectModule = {
-        isRunning: false,
-        div: document.getElementById('object'),
-        setListeners: function() {
-            this.div.addEventListener('click', function(e){
-                if(!this.classList.contains('object_animate')) {
-                    Debug.log('Running');
-                    this.classList.add('object_animate');
+    var frameArray = [0, 108, 216, 324, 432, 540, 648, 756];
 
-                } else {
-                    this.classList.remove('object_animate');
-                    Debug.log('Stopped running');
-                }
-            });
-        },
-        init: function() {
-            objectModule.setListeners();
+    // frameWidth = 864/8; //108
+    function getFramesArray (width, frames) {
+        var frameWidth = width/frames;
+        var outputArray = [];
+        for (var i = 0; i < frames; i++ ) {
+            outputArray.push(frameWidth * i);
         }
-    };
+        return outputArray;
+    }
 
-    // initialize
-    objectModule.init();
+    // =================================================
+    var previousMillis = Date.now();
+    var currentMillis;
+    var interval = 500;
 
-    // if isRunning == true,
-    // var object = document.getElementById('object');
-    // FANC-SHUNS.
+    var frameIterator = 0;
+
+    function frameFlipper(arr) {
+        currentMillis = Date.now();
+
+        if(currentMillis - previousMillis > interval) {
+
+//            if(frameIterator < arr.length) {
+//                console.log(arr[frameIterator]);
+//                frameIterator = frameIterator + 1;
+//            } else {
+//                //
+//                console.log(arr[frameIterator]);
+//                frameIterator = 0;
+//            }
+
+            //TODO: make this work.
+            if(frameIterator > arr.length){
+                frameIterator = 0;
+                console.log(arr[frameIterator]);
+            } else {
+                console.log(arr[frameIterator]);
+                frameIterator = frameIterator + 1;
+            }
+
+            previousMillis = currentMillis;
+        }
+
+
+    }
+
+
+    function animateFrameFlipper() {
+        frameFlipper(frameArray);
+        requestAnimationFrame(animateFrameFlipper);
+    }
+    requestAnimationFrame(animateFrameFlipper);
+
+
+    // ==================================================
 
 </script>
 

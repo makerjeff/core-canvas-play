@@ -1,6 +1,7 @@
 # core-canvas-play
 
 ## Links
+- [Core HTML5 Canvas Book Example Code](https://github.com/corehtml5canvas/code/blob/master/ch04/example-4.1/example.js)
 - [Node.JS Base64 string conversion](http://stackoverflow.com/questions/23097928/node-js-btoa-is-not-defined-error) Use this method to convert to and from base64.
 - [Math.round() trick to convert anything to 2 decimal places](http://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-in-javascript)
 - [When to use Base64 images and when not to](http://davidbcalhoun.com/2011/when-to-base64-encode-images-and-when-not-to/)
@@ -12,3 +13,5 @@
 
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.
+- Use **"imageSmoothEnabled = false"** for pixelated images (think pixel art). [MDN ink](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled)
+- Use steps() to animate CSS spritesheet animations in steps. [Treehouse Blog Tutorial](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps)

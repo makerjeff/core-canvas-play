@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM practice 2</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #dddddd;
+
+            overflow: hidden;
+        }
+
+        .dropZone {
+            position: absolute;
+
+            bottom: 0;
+            left: 0;
+
+            width: 180px;
+            height: 180px;
+
+            border: 1px dotted black;
+        }
+
+        .object_Img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 180px;
+            height: 180px;
+            background-image: url('/images/spritesheet.png');
+            background-position: 0 0;
+            background-size: 180px 180px;
+
+            border: 1px black solid;
+            /*box-sizing: border-box;*/
+        }
+
+        .object {
+            
+        }
+
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div id="object" class="object_Img"></div>
+
+</div>
+
+
+<script>
+
+
+    // ========================================
+    // DEBUG MODE MODULE ======================
+    var Debug = {
+        debugModeOn: true,
+        log: function(message){
+            if(Debug.debugModeOn === true) {
+                console.log(message);
+            }
+        }
+    };
+    // DEBUG MODE MODULE ======================
+    // ========================================
+
+
+
+    //TODO: notes:
+    // set IMG css to '100%' and use IMG container to scale.
+    // play with pseudo elements.
+
+</script>
+
+
+</body>
+</html>

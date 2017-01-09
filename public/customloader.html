@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drawing Images</title>
+    <style>
+        html, body {
+            background: #dddddd;
+            width: 100%;
+            height: 100%;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 300px;
+        }
+
+        .veil {
+            width: 100%;
+            height: 100%;
+            background: rgba(100,100,100,1.0);
+            z-index: 1000;
+
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="300">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<div id="resultDiv">
+
+</div>
+
+<script>
+//TODO: put in code.
+    var resultDiv = document.getElementById('resultDiv');
+
+    var totalImages = 0;
+
+    //loader
+    function loadImage(url) {
+        totalImages = totalImages + 1;
+        console.log('Total images added to queue: ' + totalImages);
+
+        var img = new Image();
+        img.src = url;
+        img.onload = function(e) {
+            totalImages -= 1;
+            console.log('Image taken out of queue.');
+        };
+
+        resultDiv.appendChild(img);
+    }
+
+    // THIS DOES NOT GET BUBBLED.
+    var Loader = {
+        totalImages: 0,
+        init: function() {
+            Loader.createVeil();
+            Loader.loadImage('/images/countrypath.jpg');
+            Loader.loadImage('images/pi_screenie.jpg');
+            Loader.loadImage('/images/doodads.jpg');
+        },
+        loadImage: function(url) {
+            this.totalImages = this.totalImages + 1;
+            console.log('Total images in queue: ' + this.totalImages);
+
+            var img = new Image();
+            img.src = url;
+            img.onload = function(e) {
+                Loader.totalImages -= 1;
+                console.log(url + ' loaded.');
+                resultDiv.appendChild(img);
+                Loader.removeVeil();
+            };
+        },
+        createVeil: function(){
+            var div = document.createElement('div');
+            div.id = 'veil';
+            div.classList.add('veil');
+            div.innerHTML = '<h1>Loading</h1>';
+            document.body.appendChild(div);
+        },
+        removeVeil: function(){
+
+            if(Loader.totalImages = 0) {
+                var div = document.getElementById('veil');
+                div.parentNode.removeChild(div);
+            }
+
+        }
+    };
+
+
+    // LOAD
+    //Loader.loadImage('/images/countrypath.jpg');
+    Loader.init();
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

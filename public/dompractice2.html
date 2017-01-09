@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>DOM practice 2</title>
     <style>
+        @keyframes play {
+            100% { background-position: -864px }
+        }
+
         html, body {
             margin: 0;
             padding: 0;
@@ -14,34 +18,44 @@
             overflow: hidden;
         }
 
-        .dropZone {
-            position: absolute;
-
-            bottom: 0;
-            left: 0;
-
-            width: 180px;
-            height: 180px;
-
-            border: 1px dotted black;
-        }
-
         .object_Img {
             position: absolute;
             top: 0;
             left: 0;
-            width: 180px;
-            height: 180px;
-            background-image: url('/images/spritesheet.png');
+            width: 864px;
+            height: 140px;
+            background-image: url('/images/scott_spritesheet_single.png');
             background-position: 0 0;
-            background-size: 180px 180px;
+            background-size: 864px 140px;
 
             border: 1px black solid;
             /*box-sizing: border-box;*/
+
+            /*animation: play 1s steps(13) infinite;*/
         }
 
-        .object {
-            
+        .object_animate {
+            animation: play 0.75s steps(8) infinite;
+        }
+
+        .object_single_IMG {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 108px;
+            height: 140px;
+
+            background-image: url('/images/scott_spritesheet_single.png');
+            background-position: 0 0;
+            background-size: 864px 140px;
+
+            border: 1px black solid;
+        }
+
+        .object_single_position {
+            top: 100px;
+            left: 100px;
         }
 
 
@@ -50,32 +64,48 @@
 </head>
 <body>
 <div class="container">
-    <div id="object" class="object_Img"></div>
+    <div id="object" class="object_single_IMG"></div>
+    <div id="object2" class="object_single_IMG"></div>
 
 </div>
 
-
+<script src="/js/debugModule.js"></script>
 <script>
-
-
-    // ========================================
-    // DEBUG MODE MODULE ======================
-    var Debug = {
-        debugModeOn: true,
-        log: function(message){
-            if(Debug.debugModeOn === true) {
-                console.log(message);
-            }
-        }
-    };
-    // DEBUG MODE MODULE ======================
-    // ========================================
-
 
 
     //TODO: notes:
     // set IMG css to '100%' and use IMG container to scale.
     // play with pseudo elements.
+
+    // =============================
+    // EVENTS ======================
+
+    var objectModule = {
+        isRunning: false,
+        div: document.getElementById('object'),
+        setListeners: function() {
+            this.div.addEventListener('click', function(e){
+                if(!this.classList.contains('object_animate')) {
+                    Debug.log('Running');
+                    this.classList.add('object_animate');
+
+                } else {
+                    this.classList.remove('object_animate');
+                    Debug.log('Stopped running');
+                }
+            });
+        },
+        init: function() {
+            objectModule.setListeners();
+        }
+    };
+
+    // initialize
+    objectModule.init();
+
+    // if isRunning == true,
+    // var object = document.getElementById('object');
+    // FANC-SHUNS.
 
 </script>
 

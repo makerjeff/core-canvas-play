@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery ui autocomplete</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/js/debugModule.js"></script>
+
+</head>
+<body>
+
+<div id="container" class="container">
+    <button id="btn" class="btn">get words</button>
+</div>
+
+<div class="ui-widget">
+    <label for="tags">Tag programming languages: </label>
+    <input id="tags" size="50">
+</div>
+
+<script src="/js/data.js"></script>
+<script>
+
+
+
+    Debug.debugModeOn = true;
+
+    var button = document.getElementById('btn');
+    var tags = document.getElementById('tags');
+
+    button.addEventListener('click', function(e){
+        console.log(Data);
+    });
+
+    // helper methods
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    $( "#tags" )
+    // don't navigate away from the field on tab when selecting an item
+        .on( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 0,
+            source: function( request, response ) {
+                // delegate back to autocomplete, but extract the last term
+                response( $.ui.autocomplete.filter(
+                    Data.payload.fileArr, extractLast( request.term ) ) );
+            },
+            focus: function() {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function( event, ui ) {
+                var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( " " );
+                this.value = terms.join( ", " );
+                return false;
+            }
+        });
+
+    //FUTURE CUSTOM AUTOCOMPLETE psuedo-code
+    //take currently typed input and filter using
+    //TODO: continue psuedo code.
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -10,6 +10,9 @@
 - [W3Resource: Using Buffers in Node.js](http://www.w3resource.com/node.js/nodejs-buffer.php)
 - [Allen's Adventure in Tech: Node.JS Buffer Tutorial](https://allenkim67.github.io/2016/05/17/nodejs-buffer-tutorial.html)
 - [Save Canvas as JPG to Desktop](http://stackoverflow.com/questions/17397319/save-canvas-as-jpg-to-desktop): Use an anchor element.
+- [Facebook Login API](https://developers.facebook.com/docs/facebook-login/web)
+- [Facebook Graph API: Posting to wall (verified works)](https://developers.facebook.com/docs/javascript/reference/FB.api)
+- [Facebook User Feed Posting: Options, etc](https://developers.facebook.com/docs/graph-api/reference/v2.8/user/feed)
 
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.

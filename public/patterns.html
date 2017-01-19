@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patterns</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            background: #eeeeee;
+            border: thin solid cornflowerblue;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="radios">
+    <input type="radio" id="repeatRadio" name="patternRadio" checked > repeat
+    <input type="radio" id="repeatXRadio" name="patternRadio"> repeat-x
+    <input type="radio" id="repeatYRadio" name="patternRadio"> repeat-y
+    <input type="radio" id="noRepeatRadio" name="patternRadio"> no repeat
+</div>
+
+<canvas id="canvas" width="450" height="275">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<script>
+//TODO: put in code.
+
+    // variable definitions ------------
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        repeatRadio = document.getElementById('repeatRadio'),
+        noRepeatRadio = document.getElementById('noRepeatRadio'),
+        repeatXRadio = document.getElementById('repeatXRadio'),
+        repeatYRadio = document.getElementById('repeatYRadio'),
+        image = new Image();
+
+    // function definitions -----------
+    function fillCanvasWithPattern(repeatString) {
+        var pattern = context.createPattern(image, repeatString);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = pattern;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fill(); //TODO: is this neccessary with a fillRect?
+    }
+
+    // event handlers -------------
+    repeatRadio.onclick = function(e) {
+        fillCanvasWithPattern('repeat');
+    };
+
+    repeatXRadio.onclick = function(e) {
+        fillCanvasWithPattern('repeat-x');
+    };
+
+    repeatYRadio.onclick = function(e) {
+        fillCanvasWithPattern('repeat-y');
+    };
+
+    noRepeatRadio.onclick = function(e) {
+        fillCanvasWithPattern('no-repeat');
+    };
+
+    // Initialization --------------
+    image.src = '/images/redball64.png';
+    image.onload = function(e) {
+        fillCanvasWithPattern('repeat');
+    };
+
+
+
+</script>
+
+</body>
+</html>

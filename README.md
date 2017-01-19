@@ -15,6 +15,7 @@
 - [Facebook User Feed Posting: Options, etc](https://developers.facebook.com/docs/graph-api/reference/v2.8/user/feed)
 - [Stackoverflow: Uploading a Canvas Image to Facebook as Blob of MultiPart Form Data Type](http://stackoverflow.com/questions/35845623/uploading-a-canvas-image-to-facebook-as-blob-of-multipart-form-data-type)
 - [Intro to CSS 3D Transforms](https://desandro.github.io/3dtransforms/)
+- [Removing Git Commit History](http://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github)
 
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.

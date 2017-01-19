@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM practice 2</title>
+    <style>
+        @keyframes play {
+            100% { background-position: -864px }
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #dddddd;
+
+            overflow: hidden;
+        }
+
+        .object_Img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 864px;
+            height: 140px;
+            background-image: url('/images/scott_spritesheet_single.png');
+            background-position: 0 0;
+            background-size: 864px 140px;
+
+            border: 1px black solid;
+            /*box-sizing: border-box;*/
+
+            /*animation: play 1s steps(13) infinite;*/
+        }
+
+        .object_animate {
+            animation: play 0.75s steps(8) infinite;
+        }
+
+        .object_single_IMG {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 108px;
+            height: 140px;
+
+            background-image: url('/images/scott_spritesheet_single.png');
+            background-position: 0 0;
+            background-size: 864px 140px;
+
+            border: 1px black solid;
+        }
+
+        .object_single_position {
+            top: 100px;
+            left: 0px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <!--<div id="object" class="object_single_IMG"></div>-->
+    <div id="object2" class="object_single_IMG"></div>
+
+</div>
+
+<script src="/js/debugModule.js"></script>
+<script>
+
+
+    //TODO: notes:
+    // set IMG css to '100%' and use IMG container to scale.
+    // play with pseudo elements.
+
+    var object = document.getElementById('object2');
+
+    var frameArray = [0, 108, 216, 324, 432, 540, 648, 756];
+
+    // frameWidth = 864/8; //108
+    function getFramesArray (width, frames) {
+        var frameWidth = width/frames;
+        var outputArray = [];
+        for (var i = 0; i < frames; i++ ) {
+            outputArray.push(frameWidth * i);
+        }
+        return outputArray;
+    }
+
+    // =================================================
+    var previousMillis = Date.now();
+    var currentMillis;
+    var interval = 500;
+
+    var frameIterator = 0;
+
+    function frameFlipper(arr) {
+        currentMillis = Date.now();
+
+        if(currentMillis - previousMillis > interval) {
+
+//            if(frameIterator < arr.length) {
+//                console.log(arr[frameIterator]);
+//                frameIterator = frameIterator + 1;
+//            } else {
+//                //
+//                console.log(arr[frameIterator]);
+//                frameIterator = 0;
+//            }
+
+            //TODO: make this work.
+            if(frameIterator > arr.length){
+                frameIterator = 0;
+                console.log(arr[frameIterator]);
+            } else {
+                console.log(arr[frameIterator]);
+                frameIterator = frameIterator + 1;
+            }
+
+            previousMillis = currentMillis;
+        }
+
+
+    }
+
+    // call the animation
+    function animateFrameFlipper() {
+        frameFlipper(frameArray);
+        requestAnimationFrame(animateFrameFlipper);
+    }
+    requestAnimationFrame(animateFrameFlipper);
+
+
+    // ==================================================
+
+</script>
+
+
+</body>
+</html>

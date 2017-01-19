@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exploring Canvas Drawing</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<h1>Exploring Canvas Drawing</h1>
+<p>From the tutorial <a href="http://perfectionkills.com/exploring-canvas-drawing-techniques/" target="_blank">'Exploring Canvas Drawing Techniques'</a></p>
+
+<canvas id="canvas" width="640" height="480">
+    If you can read this, your browser sucks.
+</canvas>
+
+<br>
+    <button id="clearButton">clear</button>
+    <button id="snapshotButton">take snapshot</button>
+    <button id="socketSendButton">send</button>
+<br>
+
+<img id="snapshotImageElement" name="imagefile"></img>
+
+
+<script>
+    var clearButton = document.getElementById('clearButton');
+    var snapshotButton = document.getElementById('snapshotButton');
+    var snapshotElement = document.getElementById('snapshotImageElement');
+
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var isDrawing;
+
+    var dataURL;    // send load, then send this over socket.
+
+    canvas.onmousedown = function(e) {
+        var bbox = canvas.getBoundingClientRect();
+        isDrawing = true;
+
+        context.beginPath();    //needed to properly clearRect.
+        context.lineWidth = 10;
+        context.shadowBlur = 2;
+        context.shadowColor = 'rgb(0,0,0)';
+        context.lineJoin = 'round';
+        context.lineCap = 'round';
+        context.moveTo(e.clientX - bbox.left, e.clientY - bbox.top);
+    };
+
+    canvas.onmousemove = function(e) {
+        var bbox = canvas.getBoundingClientRect();
+        if(isDrawing) {
+            context.lineTo(e.clientX - bbox.left, e.clientY - bbox.top);
+            context.stroke();
+        }
+    };
+
+    canvas.onmouseup = function(e){
+        isDrawing = false;
+    };
+
+    // clear canvas
+    clearButton.onclick = function(e) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    // take snapshot
+    snapshotButton.onclick = function(e){
+        createSnapshot();
+    };
+
+
+    // FUNCTIONS --------------------
+    function createSnapshot() {
+
+        var data = canvas.toDataURL('image/jpg');
+        var a = document.createElement('a');
+        a.href = data;
+        a.download = 'a_wonderful_image.jpg';
+
+        var img = document.createElement('img');
+        img.src = data;
+
+        document.body.appendChild(a);
+        a.appendChild(img);
+    }
+</script>
+</body>
+</html>

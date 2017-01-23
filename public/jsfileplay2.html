@@ -33,11 +33,12 @@
     }
 
     .statusBar {
-        width: 0;
+        width: 100%;
         height: 5px;
     }
     .progressBar {
         /*background: rgba(0,255,255,1);*/
+        width: 0;
         height: 5px;
     }
 
@@ -68,10 +69,12 @@
 
 
     //constructor
-    var Amoebob = function(name, size) {
-        this.name = name;
-        this.size = size;
-    };
+//    var Amoebob = function(name, size) {
+//        this.name = name;
+//        this.size = size;
+//    };
+
+    var video = document.createElement('video');
 
 
     button.addEventListener('click', function(e){
@@ -104,6 +107,23 @@
 
         function transferComplete(event) {
             console.log('The transfer is complete. ');
+            progressBar.classList.remove('progressBar_Yellow');
+            progressBar.classList.add('progressBar_Green');
+
+//            console.log(event.target.responseText);
+            var vidBlob = this.responseText;
+            var vidSrc = window.URL.createObjectURL(vidBlob);
+
+            video.src = vidSrc;
+
+            document.appendChild(video);
+            video.play();
+
+
+
+
+
+
         }
 
         function transferFailed(event) {
@@ -116,9 +136,6 @@
 
         oReq.send();
     });
-
-
-
 
 
     // OLD ----V-----

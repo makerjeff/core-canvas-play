@@ -19,6 +19,7 @@
 - [XHR Blob Request to preload entire html5 video](http://dinbror.dk/blog/how-to-preload-entire-html5-video-before-play-solved/)
 - [XHR Progress MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest)
 - [Promisify XHR](http://stackoverflow.com/questions/30008114/how-do-i-promisify-native-xhr)
+- [Switch is faster than If-Else chains](http://stackoverflow.com/questions/767821/is-else-if-faster-than-switch-case)
 
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS File Play</title>
+</head>
+<body>
+
+<script>
+
+    // WORKING AJAX LOADING TEMPLATE.
+    // TODO: PROMISIFY INTO CONSTRUCTOR.
+
+    var video = document.createElement('video');
+
+    var req = new XMLHttpRequest();
+    req.open('GET', '/video/chewie.mp4', true);
+    req.responseType= 'blob';
+
+    // LOAD EVENT
+    req.onload = function(e) {
+        if(this.status == 200) {
+            var videoBlob = this.response;
+            var vidSrc = window.URL.createObjectURL(videoBlob);
+
+            //video is now downloaded... set source
+
+            video.src = vidSrc;
+            console.log('video source downloaded and set.');
+
+            document.body.appendChild(video);
+            video.play();
+        }
+    };
+
+    // ERROR EVENT
+    req.onerror = function() {
+        console.log('error!');
+    };
+
+    // SEND REQUEST
+    req.send();
+
+
+
+
+</script>
+
+</body>
+</html>

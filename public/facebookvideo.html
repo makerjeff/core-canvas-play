@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facebook</title>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <style>
+
+        @keyframes play {
+            100% { background-position: -864px }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #dddddd;
+        }
+
+        .resultDiv {
+            width: 100%;
+            height: 1em;
+        }
+
+        .buttonDiv {
+
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+
+            border-radius: 5px;
+
+            color: white;
+            background: #3463a2;
+
+            cursor: pointer;
+        }
+        .buttonDiv:hover {
+            background: coral;
+        }
+
+        .formContainer {
+
+        }
+        .textField {
+            width: 200px;
+        }
+
+        .glow {
+            background: rgba(200,255,0,1.0);
+        }
+
+        .modal {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 50vw;
+            height: 50vh;
+
+            background: white;
+            border: 3px solid black;
+            border-radius: 5px;
+
+            box-sizing: border-box;
+
+            z-index: 1000;  /*1000 = debug*/
+        }
+
+        .modalVeil {
+
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+<script src="/js/fbInit.js"></script>
+
+<!--STUFF GOES HERE-->
+
+<div id="modal" class="modal"></div>
+
+<div class="container">
+    <div id="resultDiv" class="resultDiv"> (no status)</div>
+    <div id="loginButton" class="loginButton buttonDiv">login</div>
+    <div id="getStatusButton" class="buttonDiv">status</div>
+
+</div>
+
+<script src="/js/debugModule.js"></script>
+<script>
+    var responseObject; //load the response from FB here to explore
+    var resultDiv = document.getElementById('resultDiv');
+
+    Debug.debugModeOn = true;
+    var fbLoginButton = document.getElementById('loginButton');
+    var fbglsButton = document.getElementById('getStatusButton');
+
+    // check state
+    window.addEventListener('load', function(e){
+        Debug.log('Everything loaded. ');
+    });
+
+    // initiate login
+    fbLoginButton.addEventListener('click', function(e){
+        Debug.log('Button has been clicked');
+
+        //FB login
+        FB.login(function(response){
+            if(response.authResponse) {
+                Debug.log('Welcome! Fetching your information...', resultDiv);
+                createLogoutButton();
+                createPostBlock();
+
+                responseObject = response;  //load responseObject for debug.
+
+                // API call
+                FB.api('/me', function(response){
+                    Debug.log('Good to see you, ' + response.name + '. ', resultDiv);
+                });
+
+            } else {
+                Debug.log('User cancelled login or did not fully authorize. ', resultDiv);
+            }
+        }, {scope: 'publish_actions'});
+    });
+
+    // check status
+    fbglsButton.addEventListener('click', function(e){
+
+        FB.getLoginStatus(function(response){
+            if(response.status === 'connected') {
+                Debug.log('Logged in.', resultDiv);
+            } else {
+                Debug.log('Not logged in, Try logging in. ', resultDiv);
+            }
+        });
+
+    });
+
+    function createLogoutButton() {
+        //add button
+        var logoutButton = document.createElement('div');
+        logoutButton.innerHTML = 'logout';
+
+        logoutButton.classList.add('buttonDiv');
+
+        logoutButton.onclick = function(e) {
+
+            FB.logout(function(response){
+                Debug.log('Logged out.', resultDiv);
+                logoutButton.parentNode.removeChild(logoutButton);
+            });
+
+            var removeMe = document.getElementById('postButton');
+            removeMe.parentNode.removeChild(removeMe);
+
+
+        };
+        document.body.appendChild(logoutButton);
+    }
+
+    function createPostBlock() {
+        var postButton = document.createElement('div');
+        postButton.id = 'postButton';
+        postButton.innerHTML = 'post';
+        postButton.classList.add('buttonDiv');
+
+        document.body.appendChild(postButton);
+
+        //POST TO WALL
+        postButton.onclick = function(e){
+
+            // make it glow
+            e.target.classList.add('glow');
+
+            //TODO: try posting
+            FB.api('/me/videos', 'POST',
+                {
+
+
+                    file_url: 'http://trumpwith.love/videos/i_love_you.mp4',    //this is the one that works.
+                    content_category: 'ENTERTAINMENT',
+                    title: 'Share some love',
+                    description: 'Share some love with words. http://trumpwith.love',
+                    privacy: {value: 'SELF'}
+                    //source: 'http://trumpwith.love/videos/america_is_amazing.mp4'
+                },
+                function(response){
+                if (!response || response.error) {
+                    Debug.log('Error! ' + response.error, resultDiv);
+                    console.log(response.error);
+                } else {
+                    Debug.log('Post ID: ' + response.id, resultDiv);
+                    postButton.classList.remove('glow');
+                }
+            });
+
+            // THIS WORKS:
+//            FB.api('/me', {fields: 'last_name'}, function(response){
+//                console.log(response);
+//            });
+        };
+    }
+
+
+</script>
+
+
+</body>
+</html>

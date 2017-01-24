@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial Gradients</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 500px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="500">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<script>
+//TODO: put in code.
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+
+        gradient = context.createRadialGradient(canvas.width/2, canvas.height, 10, canvas.width/2, 0, 100);
+
+    gradient.addColorStop(0, 'blue');
+    gradient.addColorStop(0.25, 'white');
+    gradient.addColorStop(0.5, 'purple');
+    gradient.addColorStop(0.75, 'red');
+    gradient.addColorStop(1, 'yellow');
+
+    context.fillStyle = gradient;
+    context.rect(0, 0, canvas.width, canvas.height);
+    context.fill();
+
+
+</script>
+
+</body>
+</html>

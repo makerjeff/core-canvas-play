@@ -7,5 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jefferson Wu <makerjeffwu@gmail.com>",
-  "license": "ISC"
+
+  "license": "ISC",
+  "dependencies": {
+    "express":"latest",
+    "chalk": "latest",
+    "clear": "latest",
+    "socket.io":"latest"
+  }
 }

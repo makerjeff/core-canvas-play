@@ -67,8 +67,6 @@ app.get('/:page', function(req, res){
 });
 
 
-
-
 // ========================
 // CATCH ALL MIDDLEWARE ===
 // ========================

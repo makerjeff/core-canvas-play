@@ -22,6 +22,7 @@
 - [Switch is faster than If-Else chains](http://stackoverflow.com/questions/767821/is-else-if-faster-than-switch-case)
 - [Chrome Developer: userAgent strings](https://developer.chrome.com/multidevice/user-agent): Regex for finding if device is mobile.
 
+
 ## Notes
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.
 - Use **"imageSmoothEnabled = false"** for pixelated images (think pixel art). [MDN ink](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled)

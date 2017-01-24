@@ -61,6 +61,11 @@ app.get('/', function(req, res){
 res.send('<b>You\'re on an active server.  Find the right page.</b>');
 });
 
+app.get('/:page', function(req, res){
+    res.sendFile(process.cwd() + '/public/' + req.params.page + '.html');
+    console.log(chalk.yellow('sending file ' + req.params.page + '.html'));
+});
+
 
 
 

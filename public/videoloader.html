@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>user Agent sniffing</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        video {
+            position: absolute;
+            width: 80vw;
+            height: auto;
+
+            top: 50%;
+            left: 50%;
+
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+            cursor: pointer;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 300px;
+        }
+
+
+        .modalVeil {
+
+        }
+
+        .modalBox {
+
+        }
+
+        .modalSpinner {
+
+        }
+
+
+
+    </style>
+
+    <script src="/js/debugModule.js"></script>
+    <script src="/js/PromiseXHR.js"></script>
+</head>
+<body>
+
+<div id="modalBox" class="modalBox">
+    <div id="modalSpinner" class="modalSpinner"></div>
+</div>
+
+
+<button id="button" class="button">clicky</button>
+<div id="resultDiv" class="resultDiv">
+    (unknown)
+</div>
+
+
+<script>
+    var d = document;
+    var resultDiv = d.getElementById('resultDiv');
+    var button = d.getElementById('button');
+
+    if(navigator.userAgent) {
+        resultDiv.innerHTML = navigator.userAgent;
+    }
+
+    button.onclick = function(e) {
+        Debug.log('button clicked.');
+
+        button.parentNode.removeChild(button);
+
+        makeRequest('GET', '/video/chewie.mp4', 'blob').then(function(data){
+            var video = d.createElement('video');
+            video.src = window.URL.createObjectURL(data);
+            document.body.appendChild(video);
+
+            video.addEventListener('click', function(e){
+                if(video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            video.addEventListener('timeupdate', function(e){
+                Debug.log(video.currentTime + '/' + video.duration);
+            });
+
+        }).catch(function(err){
+            Debug.log('Error with promise. ');
+        });
+
+
+    };
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

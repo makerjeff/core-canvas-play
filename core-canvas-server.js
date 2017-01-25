@@ -13,6 +13,8 @@ const chalk             = require('chalk');
 const clear             = require('clear');
 const io                = require('socket.io')(http);
 
+const promisedb         = require('./modules/promise-db');
+
 // =========================
 // CONFIGURATION ===========
 // =========================
@@ -59,6 +61,15 @@ app.use(function(req,res,next){
 // TEMP ROUTES
 app.get('/', function(req, res){
 res.send('<b>You\'re on an active server.  Find the right page.</b>');
+});
+
+app.get('/promisevideo', function(req, res){
+    promisedb.getFakeAsyncDataObject(2000).then(function(result){
+        res.json(result);
+
+    }).catch(function(reason){
+        res.json(reason);
+    });
 });
 
 app.get('/:page', function(req, res){

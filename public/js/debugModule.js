@@ -18,7 +18,7 @@ var Debug = {
         }
 
         if(debugDiv) {
-            debugDiv.innerHTML = message + ':: ' + timestamp;
+            debugDiv.innerHTML = message + ' :: ' + timestamp;
         }
     }
 };

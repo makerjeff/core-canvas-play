@@ -23,34 +23,31 @@
             cursor: pointer;
         }
 
-        #canvas {
-            margin: 10px;
-            padding: 10px;
-            background: #ffffff;
-            border: thin inset #aaaaaa;
-
-            width: 600px;
-            height: 300px;
-        }
-
-
-
-
 
     </style>
 
+    <link rel="stylesheet" href="/css/timeoutModalModule.css">
+
     <script src="/js/debugModule.js"></script>
+    <script src="/js/timeoutModalModule.js"></script>
     <script src="/js/PromiseXHR.js"></script>
 </head>
 <body>
 
-<div id="timeoutModalContainer" class="timeoutModalContainer">
-    <div id="timeoutModalVeil"
-</div>
+<!--&lt;!&ndash; DEBUG MODAL STYLES &ndash;&gt;-->
+<!--<div id="timeoutModalContainer" class="timeoutModalContainer">-->
+    <!--<div id="timeoutModalVeil" class="timeoutModalVeil"></div>-->
+    <!--<div id="timeoutModalBox" class="timeoutModalBox">-->
+        <!--<div id="timeoutModalSpinner" class="timeoutModalSpinner"></div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; DEBUG MODAL STYLES - END &ndash;&gt;-->
 
 
-<button id="button" class="button">clicky</button>
+
+<button id="button" class="button">load video</button>
 <button id="ajaxButton" class="button">ajax</button>
+<button id="modalButton" class="modalButton">modal</button>
 
 <div id="resultDiv" class="resultDiv">
     (no data. click a button to begin...)
@@ -62,6 +59,7 @@
     var resultDiv = d.getElementById('resultDiv');
     var button = d.getElementById('button');
     var ajaxButton = d.getElementById('ajaxButton');
+    var modalButton = d.getElementById('modalButton');
 
     if(navigator.userAgent) {
         resultDiv.innerHTML = navigator.userAgent;
@@ -69,10 +67,12 @@
 
     button.onclick = function(e) {
         Debug.log('Downloading video...', resultDiv);
+        Modal.create();
 
         button.parentNode.removeChild(button);
 
         makeRequest('GET', '/video/chewie.mp4', 'blob').then(function(data){
+            Modal.destroy();
             var video = d.createElement('video');
             video.src = window.URL.createObjectURL(data);
             document.body.appendChild(video);
@@ -91,21 +91,29 @@
 
         }).catch(function(err){
             Debug.log('Error with promise. ');
+            Modal.destroy();
         });
     };
 
     // AJAX BUTTON
     ajaxButton.addEventListener('click', function(e){
         Debug.log('Ajax button clicked, awaiting server response...', resultDiv);
+        Modal.create();
+
         makeRequest('get', '/promisevideo', 'text').then(function(result){
             Debug.log(result, resultDiv);
+            Modal.destroy();
 
         }).catch(function(reason){
             Debug.log(reason, resultDiv);
+            Modal.destroy();
 
         });
     });
 
+    modalButton.addEventListener('click', function(e){
+        Modal.create();
+    });
 
 
 

@@ -25,9 +25,9 @@ function makeRequest(method, url, responseType) {
         req.onprogress = function(e) {
             if( e.lengthComputable) {
                 var percentComplete = e.loaded / e.total;
-                console.log((percentComplete * 100).toFixed(2) + '%');
+                Debug.log((percentComplete * 100).toFixed(2) + '%', resultDiv);
             } else {
-                console.log('Unable to compute length of file. ');
+                Debug.log('Unable to compute length of file. ', resultDiv);
             }
         };
         // send the request.

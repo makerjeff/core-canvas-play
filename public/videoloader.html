@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>user Agent sniffing</title>
+    <title>videoLoader</title>
     <style>
         body {
             background: #dddddd;
@@ -34,17 +34,6 @@
         }
 
 
-        .modalVeil {
-
-        }
-
-        .modalBox {
-
-        }
-
-        .modalSpinner {
-
-        }
 
 
 
@@ -55,14 +44,16 @@
 </head>
 <body>
 
-<div id="modalBox" class="modalBox">
-    <div id="modalSpinner" class="modalSpinner"></div>
+<div id="timeoutModalContainer" class="timeoutModalContainer">
+    <div id="timeoutModalVeil"
 </div>
 
 
 <button id="button" class="button">clicky</button>
+<button id="ajaxButton" class="button">ajax</button>
+
 <div id="resultDiv" class="resultDiv">
-    (unknown)
+    (no data. click a button to begin...)
 </div>
 
 
@@ -70,13 +61,14 @@
     var d = document;
     var resultDiv = d.getElementById('resultDiv');
     var button = d.getElementById('button');
+    var ajaxButton = d.getElementById('ajaxButton');
 
     if(navigator.userAgent) {
         resultDiv.innerHTML = navigator.userAgent;
     }
 
     button.onclick = function(e) {
-        Debug.log('button clicked.');
+        Debug.log('Downloading video...', resultDiv);
 
         button.parentNode.removeChild(button);
 
@@ -94,15 +86,25 @@
             });
 
             video.addEventListener('timeupdate', function(e){
-                Debug.log(video.currentTime + '/' + video.duration);
+                Debug.log(video.currentTime + '/' + video.duration, resultDiv);
             });
 
         }).catch(function(err){
             Debug.log('Error with promise. ');
         });
-
-
     };
+
+    // AJAX BUTTON
+    ajaxButton.addEventListener('click', function(e){
+        Debug.log('Ajax button clicked, awaiting server response...', resultDiv);
+        makeRequest('get', '/promisevideo', 'text').then(function(result){
+            Debug.log(result, resultDiv);
+
+        }).catch(function(reason){
+            Debug.log(reason, resultDiv);
+
+        });
+    });
 
 
 

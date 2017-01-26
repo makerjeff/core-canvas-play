@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>videoLoader</title>
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
             background: #dddddd;
         }
 
@@ -71,9 +79,10 @@
 
         button.parentNode.removeChild(button);
 
-        makeRequest('GET', '/video/chewie.mp4', 'blob').then(function(data){
+        makeRequest('GET', '/video/americans_are_the_greatest_people_in_america.mp4', 'blob').then(function(data){
             Modal.destroy();
             var video = d.createElement('video');
+            video.setAttribute('poster', '/images/load_frame.jpg');
             video.src = window.URL.createObjectURL(data);
             document.body.appendChild(video);
 
@@ -114,6 +123,7 @@
     modalButton.addEventListener('click', function(e){
         Modal.create();
     });
+
 
 
 

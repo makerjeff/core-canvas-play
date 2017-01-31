@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>custom image study</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #canvas {
+            border: 1px solid blue;
+            width: 800px;
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="800"></canvas>
+
+<script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+
+    var image = new Image();
+    image.src = '/images/8x8.bmp';
+
+    image.onload = function(e){
+        ctx.drawImage(image, 0, 0, 8, 8, 0, 0, 800, 800);
+        drawGridlines(8, 8);
+    };
+
+    function drawGridlines(sectionsX, sectionsY) {
+
+        //vertical lines
+        for(var x = 0; x <= sectionsX; x++) {
+            ctx.moveTo(x * 100, 0);
+            ctx.lineTo(x* 100, 800);
+
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+
+        //horizontal lines
+        for(var y = 0; y <= sectionsX; y++) {
+            ctx.moveTo(0, y * 100);
+            ctx.lineTo(800, y * 100);
+
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

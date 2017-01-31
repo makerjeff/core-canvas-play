@@ -13,6 +13,7 @@
     "express":"latest",
     "chalk": "latest",
     "clear": "latest",
-    "socket.io":"latest"
+    "socket.io":"latest",
+    "serialport":"latest"
   }
 }

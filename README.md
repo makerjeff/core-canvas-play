@@ -21,6 +21,8 @@
 - [Promisify XHR](http://stackoverflow.com/questions/30008114/how-do-i-promisify-native-xhr)
 - [Switch is faster than If-Else chains](http://stackoverflow.com/questions/767821/is-else-if-faster-than-switch-case)
 - [Chrome Developer: userAgent strings](https://developer.chrome.com/multidevice/user-agent): Regex for finding if device is mobile.
+- [NPM Serial Port Library](https://www.npmjs.com/package/serialport)
+- [ITP Labs: Serial Communication with Node.js](https://itp.nyu.edu/physcomp/labs/labs-serial-communication/lab-serial-communication-with-node-js/)
 
 
 ## Notes

@@ -33,10 +33,13 @@ var myPort = new SerialPort(systemUSBPort, {baudRate: 9600, parser: serialport.p
     }
 });
 
-//serial port events
-myPort.on('open', function(){
-
-});
+// ====================
+// serial port events =
+// ====================
+// myPort.on('open', function(){});
+// myPort.on('data', function(data){});
+// myPort.on('close', function(){});
+// myPort.on('error', function(err){});
 
 //------------------------
 //--- enable socket.io ---
@@ -101,6 +104,10 @@ app.get('/listsp', function(req, res){
     });
 });
 
+app.get('/led1', function(req, res){
+    myPort.write('2');
+    res.send('ok');
+});
 
 
 // PAGE ROUTER =

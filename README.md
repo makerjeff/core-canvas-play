@@ -23,6 +23,7 @@
 - [Chrome Developer: userAgent strings](https://developer.chrome.com/multidevice/user-agent): Regex for finding if device is mobile.
 - [NPM Serial Port Library](https://www.npmjs.com/package/serialport)
 - [ITP Labs: Serial Communication with Node.js](https://itp.nyu.edu/physcomp/labs/labs-serial-communication/lab-serial-communication-with-node-js/)
+- [Github: Stream-Handbook](https://github.com/substack/stream-handbook)
 
 
 ## Notes

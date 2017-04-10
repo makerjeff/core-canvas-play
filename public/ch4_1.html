@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drawing Images</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 0px;
+            background: #ffffff;
+            border: 1px solid #aaaaaa;
+
+            width: 600px;
+            height: 400px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<script>
+//TODO: put in code.
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var bbox = canvas.getBoundingClientRect();
+
+    image = new Image();
+
+    image.src = '/images/countrypath.jpg';
+    image.onload = function(e) {
+        context.drawImage(image, 0,0, 400, 300);
+    };
+
+    canvas.addEventListener('mousedown', function(e) {
+        var bbox = canvas.getBoundingClientRect();
+
+        context.rect(e.clientX-bbox.left, e.clientY-bbox.top, 100, 100);
+
+        context.lineWidth = 10;
+        context.stroke();
+    });
+
+
+
+</script>
+
+
+</body>
+</html>

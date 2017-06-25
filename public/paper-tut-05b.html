@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Paper.JS Tutorial 05 Tools Multi</title>
+    <title>Paper.JS Tutorial 05 Tools Multi (practice)</title>
 
     <script src="/lib/paper-full.js"></script>
 
@@ -34,65 +34,53 @@
 
 <!-- custom direct JS code -->
 <script>
-
-    // ref canvas and buttons
+    // handles for canvas, buttons
     var canvas = document.getElementById('myCanvas');
     var button1 = document.getElementById('lines_button');
     var button2 = document.getElementById('clouds_button');
     var button3 = document.getElementById('clear_button');
 
-    // install Paper.js globally.
-    paper.install(window);
-
-    // ref global tools
+    // create global reference to tools
     var tool1, tool2;
 
-    // execute when DOM is ready
+    // launch on-load (using JS)
     window.addEventListener('load', function(e) {
-
-        // create project and view for canvas
+        // setup Paper
         paper.setup(canvas);
 
-        // create two drawing tools.
-        // tool1 will draw straight lines.
-        // tool2 will draw clouds.
-
-        // Both share the mouseDown event:
+        // create window scope path object
         var path;
 
+        // create shared mouseDown event
         function onMouseDown(event) {
             path = new paper.Path();
             path.strokeColor = 'black';
             path.strokeWidth = 5;
             path.add(event.point);
+            console.log('Starting on point: ' + event.point);
         }
 
+        // define tool1 specifics
         tool1 = new paper.Tool();
-        //tool1.minDistance = 20;
         tool1.onMouseDown = onMouseDown;
-
-        tool1.onMouseDrag = function(event) {
-            path.add(event.point);
+        tool1.onMouseDrag = function(e) {
+            path.add(e.point);
+            console.log('Adding point: ' + e.point);
         };
 
+        // define tool2 specifics
         tool2 = new paper.Tool();
-        tool2.minDistance = 30;
         tool2.onMouseDown = onMouseDown;
+        tool2.minDistance = 30;
 
-        tool2.onMouseDrag = function(event) {
-            // use the arcTo command to draw cloudy lines.
-            path.arcTo(event.point);
+        tool2.onMouseDrag = function(e) {
+            path.arcTo(e.point);
         };
 
-
-
-
-
-        // draw the view (JS requirement)
+        // draw Paper view
         paper.view.draw();
-
-
     });
+
 
     button1.addEventListener('click', function(e) {
         tool1.activate();
@@ -104,7 +92,6 @@
 
     button3.addEventListener('click', function(e) {
         paper.project.activeLayer.removeChildren();
-
     });
 
 

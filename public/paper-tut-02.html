@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Tutorial 02</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<!-- custom direct JS code -->
+<script>
+    // execute when DOM is ready
+    window.addEventListener('load', function(e) {
+        // ref canvas
+        var canvas = document.getElementById('myCanvas');
+
+        // create project and view for canvas
+        paper.setup(canvas);
+
+        // create paper.js path
+        var path = new paper.Path();
+
+        // give stroke a color
+        path.strokeColor = 'black';
+
+        // create a start point
+        var start = new paper.Point(100, 100);
+
+        // Move to the start point
+        path.moveTo(start);
+
+        // Plus operators don't work in JS,
+        // use the .add() method.
+        path.lineTo(start.add([ 200, -50 ]));
+
+        // draw the view
+        paper.view.draw();
+    });
+
+    function draw_line() {
+
+    }
+
+    function draw_rectangle() {
+
+    }
+</script>
+
+
+
+
+
+</body>
+</html>

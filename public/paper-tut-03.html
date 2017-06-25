@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Tutorial 03</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+
+            width: 600px;
+            height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true" width="600" height="300">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<!-- custom direct JS code -->
+<script>
+    // execute when DOM is ready
+    window.addEventListener('load', function(e) {
+        // ref canvas
+        var canvas = document.getElementById('myCanvas');
+
+        // create project and view for canvas
+        paper.setup(canvas);
+
+        // create paper.js path
+        var path = new paper.Path();
+
+        // draw functions
+        draw_line(path);
+
+
+        // draw the view
+//        paper.view.draw();
+
+        paper.view.onFrame = function(e) {
+            path.rotate(3);
+        };
+    });
+
+    function draw_line(path) {
+        // give stroke a color
+        path.strokeColor = 'black';
+
+        // create a start point
+        var start = new paper.Point(100, 100);
+
+        // Move to the start point
+        path.moveTo(start);
+
+        // Plus operators don't work in JS,
+        // use the .add() method.
+        path.lineTo(start.add([ 200, -50 ]));
+    }
+
+    function draw_rectangle() {
+        var path = new paper.Path.Rectangle([75,75], [100,100]);
+        path.strokeColor = 'black';
+
+    }
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -30,3 +30,22 @@
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.
 - Use **"imageSmoothEnabled = false"** for pixelated images (think pixel art). [MDN ink](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled)
 - Use steps() to animate CSS spritesheet animations in steps. [Treehouse Blog Tutorial](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps)
+
+## Paper.JS Notes
+- [Using Javascript Directly](http://paperjs.org/tutorials/getting-started/using-javascript-directly/)
+    - Pure JS (non paperscript) differences:
+        - Register a handler for DOM ready, since we can't work with Canvas before then.
+        - Manually setup a Project and View for the canvas.
+        - Access Paper.js classes and objects through 'paper' object, since it's no longer global.
+        - Use Math functions (add(), etc) instead of operators and __Point__ and __Size__.
+        - Draw view at the end. It's now only auto-handled when a view.onFrame handler is installed.
+        
+    - Special Handlers
+        - onFrame (belongs to View class)
+        - onResize (belongs to View class)
+        
+- Methods to Note:
+    - tool.minDistance = \<number\>: sets the minimum distance / segment length.
+    - paper.project.activeLayer.removeChildren();   : Clear active layer.
+
+        

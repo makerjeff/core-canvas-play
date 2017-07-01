@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Hit Play</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('canvas');
+    var global_gray_house;
+    var global_red_house;
+    var global_green_house;
+
+    paper.install(window);
+
+    // ------------------------------
+    // main loop --------------------
+    // ------------------------------
+    window.onload = function(event) {
+        // setup
+        paper.setup(canvas);
+
+        // ADD STUFF / DO STUFF HERE
+        var gray_house = new House('Jeff house', '#666666', 50, 50);
+        var red_house = new House('Shirley\'s house', '#660000', 125, 50);
+        var green_house = new House('Blackie & Tom\'s house', '#006600', 200, 50);
+
+        global_gray_house = gray_house;
+        global_red_house = red_house;
+        global_green_house = green_house;
+
+
+
+        // create hit tool
+        var hit_tool = new paper.Tool();
+        hit_tool.activate();
+
+        hit_tool.onMouseDown = function(event) {
+            var hit_result = paper.project.hitTest(event.point);
+
+            if (hit_result) {
+                console.log(hit_result.item.name + ' was hit. ');
+
+                // select / deselect
+
+                if (hit_result.item.selected === true) {
+                    hit_result.item.selected = false;
+                } else {
+                    hit_result.item.selected = true;
+                }
+
+
+            } else {
+                console.log('Deselecting all.');
+
+                // find selected items and deselect.
+                var items = paper.project.getItems({selected: true});
+                items.forEach(function(elem, ind, arr) {
+                    elem.selected = false;
+                });
+            }
+        };
+
+        // animation loop
+        paper.view.onFrame = function(event) {
+
+            // NOTE: without using the 'class' option of Path, entire layers are selected.
+            var items = paper.project.getItems({selected: true, class:Path});
+
+            // rotate each item (TODO: set speed of item.
+            items.forEach(function(elem) {
+                elem.rotate(event.delta * 300);
+            });
+
+        };
+
+        // render
+        paper.view.draw();
+    };
+
+
+    // constructors
+    var House = function(name, color, pos_x, pos_y) {
+
+        // gray house points array
+        var draw_path_array = [
+            new paper.Point(25, 0),
+            new paper.Point(50, 25),
+            new paper.Point(50, 50),
+            new paper.Point(0, 50),
+            new paper.Point(0, 25)
+        ];
+
+        var pivot_point = new paper.Point(25, 50);
+
+        // add and close path
+        path = new paper.Path();
+        path.name = name;
+        path.strokeColor = 'black';
+        path.strokeWidth = 2;
+        path.pivot = pivot_point;
+
+        path.fillColor = color;
+
+        draw_path_array.forEach(function(elem, ind, arr) {
+            path.add(elem);
+        });
+
+        path.closed = true;
+
+        // transform position to pos_x and pos_y
+        path.position = new paper.Point(pos_x, pos_y);
+
+
+        return path;
+    };
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

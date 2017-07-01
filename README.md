@@ -62,7 +62,7 @@
         - __event.time__: total time since first frame was fired.
         - __event.delta__: time passed in seconds since the last frame event.
     - Hit Tests:
-        - [item.getItems(options)](http://paperjs.org/reference/project/#getitems-options)
+        - [item.getItems(options)](http://paperjs.org/reference/project/#getitems-options): Use this to search for items during HitTests.
    
 
         

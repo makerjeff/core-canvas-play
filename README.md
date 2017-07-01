@@ -47,5 +47,22 @@
 - Methods to Note:
     - tool.minDistance = \<number\>: sets the minimum distance / segment length.
     - paper.project.activeLayer.removeChildren();   : Clear active layer.
+    - path.segments[0].point = use this to access the first segment point (closing the path, etc)
+    - __path.closed = true;__  : Use this for closing arcs, lines, etc.
+    - __path.clone()__ : clone a path
+    - __path.fullySelected = true__ : Select all handles (displaying handles as well);
+    - __\<item\>.remove()__ : Removes current item.
+    - __event.delta__ : the vector of the mouse movement between frames. Use this to control width using speed.
+    - __event.middlePoint__ : Middle of a 'section'. part of mouse events for Paper.js.
+    - __path.insert(index, segment)__ : to add a point to the start of path. Makes the ladder thing.
+    - __path.fillColor = {hue: number, saturation: 1, brightness: 1}__ : colorize using HSL.
+    - __event.point__: (returned from mouse events) Where the user has clicked.
+    - Animation:
+        - __event.count__: number of times the frame event has fired.
+        - __event.time__: total time since first frame was fired.
+        - __event.delta__: time passed in seconds since the last frame event.
+    - Hit Tests:
+        - [item.getItems(options)](http://paperjs.org/reference/project/#getitems-options)
+   
 
         

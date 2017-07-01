@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Tutorial 06b points practice</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<button id="lines_button">Lines</button>
+<button id="clouds_button">Clouds</button>
+<button id="clear_button">Clear</button>
+<button id="draw_random_button">draw random</button>
+
+<!-- custom direct JS code -->
+<script>
+
+    var canvas = document.getElementById('myCanvas');
+    var button1 = document.getElementById('draw_random_button');
+    var button2 = document.getElementById('clear_button');
+
+    var global_path;
+
+    window.addEventListener('load', function(e) {
+        paper.setup(canvas);    //JS start
+
+       //draw_simple_path_no_argument();
+
+
+        paper.view.draw();      //JS end
+    });
+
+    function draw_simple_path_no_argument() {
+        var path = new paper.Path();
+        path.strokeColor = 'black';
+        path.strokeWidth = 10;
+
+        path.add(new paper.Point(0,0));
+        path.add(new paper.Point(50,100));
+    }
+
+    function draw_path(path) {
+        path = new paper.Path();
+        path.strokeColor = 'red';
+        path.strokeWidth = 5;
+
+        path.add(new paper.Point(0,0));
+        path.add(new paper.Point(50,100));
+        path.add(new paper.Point(35, 200));
+    }
+
+    function draw_random_path() {
+        var path = new paper.Path();
+        path.strokeColor = 'rgb(' + Math.floor(Math.random() * 255) + ',' +
+                Math.floor(Math.random() * 255) + ',' +
+                Math.floor(Math.random() * 255) +
+            ')';
+        path.strokeWidth = Math.ceil(Math.random() * 10);
+        path.strokeCap =
+
+        path.add(new paper.Point(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height)));
+        path.add(new paper.Point(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height)));
+        path.add(new paper.Point(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height)));
+
+        path.closed = true;
+
+        var cloned = path.clone();
+        cloned.fullySelected = false;
+        cloned.position.x += 100;
+        cloned.smooth();
+    }
+
+    button1.addEventListener('click', function(e) {
+        //draw_path(global_path);
+        draw_random_path(global_path);
+    });
+
+    button2.addEventListener('click', function(e) {
+        paper.project.activeLayer.removeChildren();
+    });
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Animation Play</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #myCanvas {
+            margin: 0px;
+            padding: 0px;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+        /*#myCanvas[resize] {*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('myCanvas');
+
+    paper.install(window);
+
+    window.addEventListener('load', function(event) {
+
+        // initial setup
+        paper.setup(canvas);
+
+        var path = new paper.Path.Rectangle({
+            point: [75, 75],
+            size: [75,75],
+            strokeColor: 'black',
+            strokeWidth: 5,
+            fillColor: '#00FF00'
+        });
+        path.name = 'Mc Firstpath.';
+
+        var clone = path.clone();
+        clone.fillColor = 'green';
+        clone.position = new paper.Point(300, 100);
+        clone.name = 'Cloned path McGee.';
+
+        // animation
+        paper.view.onFrame = function(event) {
+            path.rotate(3 * event.delta * 50);
+            clone.rotate(3 * event.delta * 25);
+        };
+
+        // --- HIT TEST TOOL ---
+        var hit_tool = new paper.Tool();
+        hit_tool.activate();
+
+        hit_tool.onMouseDown = function(event) {
+            var hit_options = {
+                segments: true,
+                stroke: true,
+                fill: true,
+                tolerance: 5
+            };
+
+            var hit_result = paper.project.hitTest(event.point, hit_options);
+
+            if (hit_result) {
+                //we have a hit
+                console.log(hit_result);
+                console.log('Item id: ' + hit_result.item.id);
+                console.log('Item type: ' + hit_result.type);
+                console.log('Item name: ' + hit_result.item.name);
+
+                hit_result.item.selected = true;
+
+
+            } else {
+                //--- DESELECT ---
+                var items = paper.project.getItems({
+                    selected: true,
+                    class: Path
+                });
+
+                //console.log(items);
+
+                items.forEach(function(elem, ind, arr) {
+                    elem.selected = false;
+                });
+            }
+        };
+        // --- HIT TEST TOOL (END) ---
+
+
+
+
+        // draw update
+        paper.view.draw();
+    });
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

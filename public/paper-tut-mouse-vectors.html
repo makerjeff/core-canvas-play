@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Tutorial Mouse Vectors</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #myCanvas {
+            margin: 0px;
+            padding: 0px;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+        /*#myCanvas[resize] {*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('myCanvas');
+
+    var tool;
+
+    window.addEventListener('load', function(e) {
+        paper.setup(canvas);
+
+        // create tool
+        tool = new paper.Tool();
+        tool.minDistance = 5;
+        tool.maxDistance = 45;
+
+        tool.onMouseDown = onMouseDown;
+        tool.onMouseDrag = onMouseDrag;
+        tool.onMouseUp = onMouseUp;
+
+        // create path
+        var path;
+
+        function onMouseDown(event) {
+            path = new paper.Path();
+
+            path.fillColor = {
+                hue: Math.random() * 360,
+                saturation: 1,
+                brightness: 1
+            };
+
+//            path.strokeColor = 'black';
+//            path.selected = true;
+            path.add(event.point);
+
+
+            //console.log('starting at ' + event.point);
+        }
+
+        function onMouseDrag(event) {
+            var step = event.delta;
+            step.angle += 90;   // rotate 90 degrees
+
+            var top = event.middlePoint.add(step);
+            var bottom = event.middlePoint.subtract(step);
+
+            // REMOVED for FINAL PAINT.
+//            var line = new paper.Path();
+//            line.strokeColor = 'black';
+//            line.add(top);
+//            line.add(bottom);
+
+            path.add(top);
+            path.insert(0, bottom);
+            path.smooth();
+        }
+
+        function onMouseUp(event) {
+            path.add(event.point);
+            path.closed = true;
+            path.smooth();
+        }
+
+
+        paper.view.draw();
+    });
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

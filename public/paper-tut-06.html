@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Tutorial 06 Tools + Points</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+        body {
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border: thin solid black;
+
+            width: 600px;
+            height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" resize="true" width="600" height="300">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+<button id="lines_button">Lines</button>
+<button id="clouds_button">Clouds</button>
+<button id="clear_button">Clear</button>
+<button id="draw_random_button">draw random</button>
+
+<!-- custom direct JS code -->
+<script>
+    var d = document;
+    var canvas = d.getElementById('myCanvas');
+    var button1 = d.getElementById('lines_button');
+    var button2 = d.getElementById('clouds_button');
+    var button3 = d.getElementById('clear_button');
+    var button4 = d.getElementById('draw_random_button');
+
+    var tool1, tool2;
+
+    var global_path;
+
+    window.addEventListener('load', function(e) {
+
+        // setup (required for JS)
+        paper.setup(canvas);
+
+        var path;
+
+        var first_point;
+
+        // define Mouse Down event handler
+        function onMouseDown(event) {
+            path = new paper.Path();
+            path.strokeColor = 'black';
+            path.strokeWidth = 5;
+            path.add(event.point);
+            console.log('Starting point: ' + event.point);
+        }
+
+        // define tool1
+        tool1 = new paper.Tool();
+        tool1.onMouseDown = onMouseDown;
+        tool1.onMouseDrag = function(e) {
+            path.add(e.point);
+            console.log('Adding point to path: ' + e.point);
+        };
+
+        // define tool2
+        tool2 = new paper.Tool();
+        tool2.onMouseDown = onMouseDown;
+        tool2.minDistance = 30;
+        tool2.onMouseDrag = function(e) {
+            path.arcTo(e.point);
+        };
+
+        tool2.onMouseUp = function(e) {
+            console.log('Starting point: ');
+            console.log(path.segments[0].point);
+
+            // draw an arc back to the first point.
+            path.arcTo(path.segments[0].point);
+            path.closed = true;
+        };
+
+        // temp RUN me
+        global_path_draw();
+
+        // render
+        paper.view.draw();
+    });
+
+    // activate tool1
+    button1.addEventListener('click', function(e) {
+        tool1.activate();
+    });
+
+    // activate tool2
+    button2.onclick = function(e) {
+        tool2.activate();
+    };
+
+    // clear canvas
+    button3.onclick = function(e) {
+        paper.project.activeLayer.removeChildren();
+    };
+
+    button4.onclick = function(e) {
+
+        var points_array = [];
+
+        global_path = new paper.Path();
+        global_path.strokeStyle = 'black';
+        global_path.strokeWidth = 10;
+
+        for (var i = 0; i < 10; i++) {
+            //create point and add to array
+
+            points_array.push(new paper.Point(Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)));
+        }
+
+        console.log(points_array);
+
+        //draw_from_points(points_array, global_path);
+
+        global_path.add(new paper.Point(0,0));
+        global_path.add(new paper.Point(0, 100));
+        global_path.add(new paper.Point(50, 100));
+        global_path.closed = true;
+
+        // required?
+        paper.view.draw();
+    };
+
+    function global_path_draw() {
+        global_path = new paper.Path();
+        global_path.strokeStyle = 'black';
+        global_path.strokeWidth = 5;
+
+        global_path.add(new paper.Point(0, 0));
+        global_path.add(new paper.Point(0, 100));
+        global_path.add(new paper.Point(50, 100));
+        global_path.closed = true;
+    }
+
+    function draw_from_points(points_array, input_path) {
+        points_array.forEach(function(elem, ind,array) {
+            input_path.add(new paper.Point(Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)));
+            console.log('adding item: ' + elem);
+
+            //TODO: check 'path' is the correct object.
+        });
+    }
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

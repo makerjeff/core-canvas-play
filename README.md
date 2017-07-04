@@ -61,8 +61,10 @@
         - __event.count__: number of times the frame event has fired.
         - __event.time__: total time since first frame was fired.
         - __event.delta__: time passed in seconds since the last frame event.
+        - __paper-tut-animation-play-3.html__: Working paper.js animation, using javascript and not paper script.
     - Hit Tests:
         - [item.getItems(options)](http://paperjs.org/reference/project/#getitems-options): Use this to search for items during HitTests.
+        
    
 
         

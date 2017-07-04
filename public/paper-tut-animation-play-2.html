@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Anim play 2</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('canvas');
+
+    paper.install(window);
+
+    window.onload = function(event) {
+        paper.setup(canvas);
+
+        var path = new paper.Path.Circle({
+            center: view.center,
+            radius: 70,
+            fillColor: 'red'
+        });
+
+        paper.view.onFrame = function(e) {
+            path.fillColor.hue += 1;
+
+        };
+
+        paper.view.draw();
+    };
+
+</script>
+
+
+
+
+
+</body>
+</html>

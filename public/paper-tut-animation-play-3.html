@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paper.JS Anim play 3</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('canvas');
+
+    paper.install(window);
+
+    window.onload = function(event) {
+        paper.setup(canvas);
+
+        // create centered text
+        var text = new paper.PointText({
+            point: view.center,
+            justification: 'center',
+            fontSize: 30,
+            fillColor: 'black'
+        });
+
+        text.content = 'text';
+
+        // create a new random destination (point), based on view size.
+        var destination = paper.Point.random().multiply(view.size);
+
+        paper.view.onFrame = function(e) {
+
+            // extrapolate a vector, subtract text position from destination.
+            var vector = destination.subtract(text.position);
+
+            // set the position, but keep adding the calculated vector value per frame
+            text.position = text.position.add((vector.divide(25)));
+            text.content = Math.round(vector.length);
+
+            // if value is less than 10...
+            if (vector.length < 10) {
+
+                // create a new destination (point)
+                destination = paper.Point.random().multiply(view.size);
+            }
+
+        };
+
+        paper.view.draw();
+    };
+
+</script>
+
+
+
+
+
+</body>
+</html>

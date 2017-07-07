@@ -30,6 +30,8 @@
 - When creating new buffers to transform encoding, be sure to input the type of data that it already is. That way, the buffer created will be properly interpreted.
 - Use **"imageSmoothEnabled = false"** for pixelated images (think pixel art). [MDN ink](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled)
 - Use steps() to animate CSS spritesheet animations in steps. [Treehouse Blog Tutorial](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps)
+- When drawing single pixel lines, draw them at 0.5 pixel width, on point + 0.5 offset, otherwise it'll blur.
+- context.strokeColor will only work if it's a color, while context.strokeStyle can be assigned to any # or rgba etc.
 
 ## Paper.JS Notes
 - [Using Javascript Directly](http://paperjs.org/tutorials/getting-started/using-javascript-directly/)

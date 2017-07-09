@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dublin-Grid-2</title>
+
+    <script src="/lib/paper-full.js"></script>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+    var canvas = document.getElementById('canvas');
+    var context = document.getElementById('canvas').getContext('2d');
+
+    // TICKS VARS
+    var AXIS_MARGIN = 40;   // distance from left and bottom walls (respectively)
+    var AXIS_ORIGIN = {x:AXIS_MARGIN, y: canvas.height - AXIS_MARGIN};  // origin point, in relation to margin values.
+
+    var AXIS_TOP = AXIS_MARGIN;     // axis line distance from top
+    var AXIS_RIGHT = canvas.width - AXIS_MARGIN;    // axis line distance from right
+
+    var HORIZONTAL_TICK_SPACING = 10;   // distance between horizontal ticks
+    var VERTICAL_TICK_SPACING = 10;     // distance between vertical ticks
+
+    var AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x;    // total width: distance from right, minus X origin.
+    var AXIS_HEIGHT = AXIS_ORIGIN.y - AXIS_TOP;     // total height: distance from top, minus Y origin.
+
+    var NUM_VERTICAL_TICKS = AXIS_HEIGHT / VERTICAL_TICK_SPACING;   // # of vertical ticks: axis height / vertical ticks.
+    var NUM_HORIZONTAL_TICKS = AXIS_WIDTH / HORIZONTAL_TICK_SPACING;    // # of horizontal ticks: axis width / horizontal ticks.
+
+    var TICK_WIDTH = 10;        // should really be "length" of ticks
+    var TICKS_LINEWIDTH = 0.5;  // tick line width
+    var TICKS_COLOR = 'navy';   // tick color
+
+    var AXIS_LINEWIDTH = 1.0;   // width of axis line
+    var AXIS_COLOR = 'blue';    // axis color
+
+    /**
+     * Draws the underlying grid system.
+     * @param context   Canvas context to draw on.
+     * @param style     Context strokeStyle.
+     * @param step_x    Steps at which to draw grid lines on X.
+     * @param step_y    Steps at which to draw grid lines on Y.
+     */
+    function draw_grid(context, style, step_x, step_y) {
+        context.strokeStyle = style;
+        context.lineWidth = 0.5;
+
+        // for every grid line step (offset by 0.5 pixels) less than the total width, increment by the step_x argument.
+        for (var i = step_x + 0.5; i < context.canvas.width; i += step_x ) {
+            context.beginPath();
+            context.moveTo(i, 0);
+            context.lineTo(i, context.canvas.height);
+            context.stroke();
+        }
+
+        // for every grid line step (offset by 0.5 pixels) less than total height, increment by the step_y argument.
+        for (var i = step_y + 0.5; i < context.canvas.height; i += step_y) {
+            context.beginPath();
+            context.moveTo(0, i);
+            context.lineTo(context.canvas.width, i);
+            context.stroke();
+        }
+    }
+
+    /**
+     * Draws the X and Y base axes lines.
+     */
+    function draw_axes() {
+        context.save();     // saves current drawing tool settings and coordinate system.
+        context.strokeStyle = AXIS_COLOR;
+        context.lineWidth = AXIS_LINEWIDTH;
+
+        draw_horizontal_axis();
+        draw_vertical_axis();
+
+        context.lineWidth = 0.5;
+        context.lineWidth = TICKS_LINEWIDTH;
+        context.strokeStyle = TICKS_COLOR;
+
+        draw_vertical_axis_ticks();
+        draw_horizontal_axis_ticks();
+
+        context.restore();  // after drawing lines, restore previous tool settings and coordinate system.
+    }
+
+    /**
+     * Draws the horizontal axis line.
+     */
+    function draw_horizontal_axis() {
+        context.beginPath();
+        context.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        context.lineTo(AXIS_RIGHT, AXIS_ORIGIN.y);
+        context.stroke();
+    }
+
+    /**
+     * Draws the horizontal axis ticks.
+     */
+    function draw_horizontal_axis_ticks() {
+        var delta_y;
+
+        for (var i = 1; i < NUM_HORIZONTAL_TICKS; i++) {
+            context.beginPath();
+
+            // check every 5th tick
+            if (i % 5 === 0) {
+                delta_y = TICK_WIDTH;
+            } else {
+                delta_y = TICK_WIDTH/2;
+            }
+
+            // start at negative and draw to positive
+            context.moveTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y - delta_y);
+            context.lineTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y + delta_y);
+            context.stroke();
+        }
+    }
+
+    // --- draw vertical axis ---
+    function draw_vertical_axis() {
+        context.beginPath();
+        context.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        context.lineTo(AXIS_ORIGIN.x, AXIS_TOP);
+        context.stroke();
+    }
+
+    // --- draw vertical axis ticks ---
+    function draw_vertical_axis_ticks() {
+        var delta_x;
+
+        for (var i = 1; i < NUM_VERTICAL_TICKS; i++) {
+            context.beginPath();
+
+            // check to see if it's every 5th tick.
+            if (i % 5 === 0) {
+                delta_x = TICK_WIDTH;
+            } else {
+                delta_x = TICK_WIDTH/2;
+            }
+
+            // start at negative tick and draw to positive
+            context.moveTo(AXIS_ORIGIN.x + i * VERTICAL_TICK_SPACING, AXIS_ORIGIN.y - delta_x);
+            context.lineTo(AXIS_ORIGIN.x + i * VERTICAL_TICK_SPACING, AXIS_ORIGIN.y + delta_x);
+            context.stroke();
+        }
+    }
+
+
+
+    window.onload = function(event) {
+        draw_grid(context, 'rgb(175, 200, 200)', 10, 10);
+        draw_axes();
+    };
+
+</script>
+
+
+
+
+
+</body>
+</html>

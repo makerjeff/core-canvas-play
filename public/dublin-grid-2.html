@@ -103,8 +103,9 @@
         context.lineWidth = TICKS_LINEWIDTH;
         context.strokeStyle = TICKS_COLOR;
 
-        draw_vertical_axis_ticks();
+        //draw_vertical_axis_ticks();
         draw_horizontal_axis_ticks();
+        experimental_vert_ticks();
 
         context.restore();  // after drawing lines, restore previous tool settings and coordinate system.
     }
@@ -165,10 +166,36 @@
             }
 
             // start at negative tick and draw to positive
-            context.moveTo(AXIS_ORIGIN.x + i * VERTICAL_TICK_SPACING, AXIS_ORIGIN.y - delta_x);
+            context.moveTo(AXIS_ORIGIN.x - i * VERTICAL_TICK_SPACING, AXIS_ORIGIN.y + delta_x);
             context.lineTo(AXIS_ORIGIN.x + i * VERTICAL_TICK_SPACING, AXIS_ORIGIN.y + delta_x);
             context.stroke();
         }
+    }
+
+    //TODO: THIS WORKS!
+    function experimental_vert_ticks() {
+        var temp_delta;
+        var temp_spacing = 10;
+
+        context.save();
+
+        context.strokeStyle = '#ff0000';
+
+        for(var i = 1; i < NUM_VERTICAL_TICKS; i++) {
+
+            if(i % 5 === 0) {
+                delta = TICK_WIDTH;
+            } else {
+                delta = TICK_WIDTH/2;
+            }
+
+            context.moveTo(AXIS_ORIGIN.x - delta, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            context.lineTo(AXIS_ORIGIN.x + delta, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING``);
+            context.stroke();
+
+        }
+
+        context.restore();
     }
 
 

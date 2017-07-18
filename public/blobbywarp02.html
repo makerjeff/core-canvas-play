@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blobby Warp 01</title>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+
+    window.onload = function(e) {
+        var canvas          = document.getElementById('canvas');
+        var context         = canvas.getContext('2d');
+        var current_time;
+        var previous_time   = Date.now();
+        var fps             = 12;
+        var interval        = 1000/fps;     // 15 fps
+
+        animate();
+
+
+        // --- FUNCTION DEFS ---
+
+        // MAIN ANIMATE FUNCTION
+        function animate() {
+
+            current_time = Date.now();
+
+            if (current_time - previous_time >= interval ) {
+
+                // DO SOMETHING HERE
+                console.log('current time: ' + current_time);
+                console.log('time delta: ' + (current_time - previous_time));
+
+
+                update_text(current_time);
+                draw_line();
+
+
+                // reset timer
+                previous_time = current_time;
+            }
+
+            window.requestAnimationFrame(animate);
+        }
+
+        // --- FUNCTIONS TO PUT IN ANIMATE ---
+
+        var line_pos = 0;
+
+        // DRAW LINES
+        function draw_line() {
+
+            //TODO: figure out why this doesn't work, or if there needs to be a global clear rect.
+            //context.clearRect(0, 0, canvas.width, canvas.height);
+
+
+            context.save();
+
+
+            context.strokeStyle = '#ff0000';
+            context.strokeWidth = 10;
+            context.moveTo(line_pos, 0);
+            context.lineTo(line_pos, canvas.height);
+            context.stroke();
+
+            context.restore();
+
+            if (line_pos < canvas.width) {
+                line_pos += 10;
+            } else {
+                line_pos = 0;
+            }
+
+        }
+
+        // UPDATE TEXT
+        function update_text(text) {
+            // save context stack
+            context.save();
+
+            // clear all
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            //draw text
+            context.fillStyle = '#ffffff';
+            context.font = '32px Arial';
+            context.fillText(text, canvas.width - context.measureText(text).width - 20, canvas.height - 20);
+
+            // restore context stack
+            context.restore();
+        }
+    };
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

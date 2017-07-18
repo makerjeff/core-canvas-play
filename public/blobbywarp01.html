@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blobby Warp 01</title>
+
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #dddddd;
+        }
+
+        #canvas {
+            margin: 0;
+            padding: 0;
+            /*background: #ffffff;*/
+            border: thin solid black;
+
+            width: 600px;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas" resize="true" width="600" height="600">
+    If you can read this, Canvas is not supported.
+</canvas>
+
+
+<!-- custom direct JS code -->
+<script>
+
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    context.imageSmoothingEnabled = false;
+
+    //todo: simple request animation frame timer for animations.
+
+    function animate() {
+        console.log(Date.now());
+        window.requestAnimationFrame(animate);
+    }
+
+    function draw_cube(posX, posY, width, height) {
+        var img = new Image();
+        img.src = '/images/blob_01.png';
+
+        img.onload = function() {
+            // sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight
+            context.drawImage(img, posX, posY, 16, 16, 0, 0, width, height);
+
+            // animate
+            window.requestAnimationFrame(function(e) {
+                context.drawImage()
+            });
+        };
+    }
+
+    function animate_cube(posX, posY, width, height) {
+
+    }
+
+
+    window.onload = function(e) {
+
+        console.log('Windowbots, initialize!');
+        //animate();
+
+        //draw_cube(0, 0, 160, 160);
+
+
+
+    };
+
+</script>
+
+
+
+
+
+</body>
+</html>
